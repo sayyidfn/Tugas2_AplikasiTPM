@@ -17,19 +17,7 @@ class _SumPageState extends State<SumPage> {
 
   void _calculateLength() {
     if (_textController.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text(
-            "Teks tidak boleh kosong! Silahkan ketik sesuatu.",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          backgroundColor: Colors.red.shade600,
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-      );
+      _showSnack("Teks tidak boleh kosong! Silahkan ketik sesuatu", Colors.red.shade700);
 
       setState(() {
         _result = 0;
@@ -40,6 +28,20 @@ class _SumPageState extends State<SumPage> {
     setState(() {
       _result = _textController.text.length;
     });
+  }
+
+  void _showSnack(String pesan, Color warna) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          pesan,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: warna,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      ),
+    );
   }
 
   @override
@@ -72,7 +74,7 @@ class _SumPageState extends State<SumPage> {
               const Text(
                 "Masukkan Teks",
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 18,
                   fontWeight: FontWeight.w700,
                   color: AppColors.dark,
                 ),

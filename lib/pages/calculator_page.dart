@@ -19,19 +19,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
   void _calculate(bool isAddition) {
     if (_num1Controller.text.trim().isEmpty ||
         _num2Controller.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text(
-            "Angka A dan Angka B tidak boleh kosong!",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          backgroundColor: Colors.red.shade600,
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-      );
+      _showSnack("Angka A dan Angka B tidak boleh kosong!", Colors.red.shade700);
       return;
     }
 
@@ -45,6 +33,20 @@ class _CalculatorPageState extends State<CalculatorPage> {
         _result = num1 - num2;
       }
     });
+  }
+
+  void _showSnack(String pesan, Color warna) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          pesan,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: warna,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      ),
+    );
   }
 
   @override
