@@ -11,20 +11,15 @@ class CalculatorPage extends StatefulWidget {
 }
 
 class _CalculatorPageState extends State<CalculatorPage> {
-  // Controller untuk menangkap teks yang diketik di kolom input
   final TextEditingController _num1Controller = TextEditingController();
   final TextEditingController _num2Controller = TextEditingController();
 
-  // Variabel untuk menyimpan hasil perhitungan
   double _result = 0.0;
 
-  // Fungsi Logika Kalkulator
   void _calculate(bool isAddition) {
-    // Mengubah teks menjadi angka (double). Jika kosong atau salah ketik, anggap 0.
     double num1 = double.tryParse(_num1Controller.text) ?? 0.0;
     double num2 = double.tryParse(_num2Controller.text) ?? 0.0;
 
-    // Memperbarui UI dengan hasil baru
     setState(() {
       if (isAddition) {
         _result = num1 + num2;
@@ -34,7 +29,6 @@ class _CalculatorPageState extends State<CalculatorPage> {
     });
   }
 
-  // Wajib membuang controller saat halaman ditutup agar tidak bocor memori
   @override
   void dispose() {
     _num1Controller.dispose();
@@ -115,7 +109,6 @@ class _CalculatorPageState extends State<CalculatorPage> {
               _buildTextField(_num2Controller, "Masukan angka B"),
               const SizedBox(height: 35),
 
-              // 4. Baris Tombol Aksi
               Row(
                 children: [
                   Expanded(
@@ -169,7 +162,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
         hintStyle: TextStyle(
           color: AppColors.dark.withValues(
             alpha: 0.3,
-          ), // Warna sedikit transparan
+          ),
           fontWeight: FontWeight.normal,
         ),
         contentPadding: const EdgeInsets.symmetric(
