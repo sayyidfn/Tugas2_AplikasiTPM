@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:tugasaplikasitpm/models/menu_model.dart';
 
 class CalculatorPage extends StatefulWidget {
-  const CalculatorPage({super.key});
+  final MenuModel menuData;
+  const CalculatorPage({super.key, required this.menuData});
 
   @override
   State<CalculatorPage> createState() => _CalculatorPageState();

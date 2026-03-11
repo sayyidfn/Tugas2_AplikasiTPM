@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:tugasaplikasitpm/models/menu_model.dart';
 
 class SumPage extends StatefulWidget {
-  const SumPage({super.key});
+  final MenuModel menuData;
+  const SumPage({super.key, required this.menuData});
 
   @override
   State<SumPage> createState() => _SumPageState();

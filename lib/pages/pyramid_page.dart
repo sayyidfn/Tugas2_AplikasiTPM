@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:tugasaplikasitpm/models/menu_model.dart';
 
 class PyramidPage extends StatefulWidget {
-  const PyramidPage({super.key});
+  final MenuModel menuData;
+  const PyramidPage({super.key, required this.menuData});
 
   @override
   State<PyramidPage> createState() => _PyramidPageState();

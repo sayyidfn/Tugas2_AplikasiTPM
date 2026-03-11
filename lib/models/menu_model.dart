@@ -29,27 +29,27 @@ class MenuModel {
     MenuModel(
       title: "ANGGOTA KELOMPOK",
       iconPath: "assets/icons/group.svg",
-      pageBuilder: (m) => const GroupDataPage(),
+      pageBuilder: (m) => GroupDataPage(menuData: m),
     ),
     MenuModel(
       title: "TAMBAH & KURANG",
       iconPath: "assets/icons/math.svg",
-      pageBuilder: (m) => const CalculatorPage(),
+      pageBuilder: (m) => CalculatorPage(menuData: m),
     ),
     MenuModel(
       title: "HITUNG KARAKTER",
       iconPath: "assets/icons/sigma.svg",
-      pageBuilder: (m) => const SumPage(),
+      pageBuilder: (m) => SumPage(menuData: m),
     ),
     MenuModel(
       title: "TEBAK BILANGAN",
       iconPath: "assets/icons/guess.svg",
-      pageBuilder: (m) => const GuessNumberPage(),
+      pageBuilder: (m) => GuessNumberPage(menuData: m),
     ),
     MenuModel(
       title: "KALKULATOR PIRAMID",
       iconPath: "assets/icons/pyramid.svg",
-      pageBuilder: (m) => PyramidPage(),
+      pageBuilder: (m) => PyramidPage(menuData: m),
       isFullWidth: true,
     ),
   ];
