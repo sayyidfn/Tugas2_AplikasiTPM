@@ -132,7 +132,7 @@ class _LoginPageState extends State<LoginPage> {
               Container(height: 2, color: AppColors.dark),
 
               _buildInputField(
-                label: "Password(NIM)",
+                label: "Password",
                 controller: _passwordController,
                 isPassword: true,
               ),
@@ -171,13 +171,19 @@ class _LoginPageState extends State<LoginPage> {
               isDense: true,
               contentPadding: const EdgeInsets.symmetric(vertical: 12),
               border: InputBorder.none,
+              // prefixIcon: isPassword
+              //     ? Icon(Icons.lock, size: 30)
+              //     : Icon(Icons.person, size: 30),
+              hintText: isPassword
+                  ? "Masukan NIM anda"
+                  : "Masukan username anda",
               suffixIcon: isPassword
                   ? IconButton(
                       onPressed: () => setState(() => _isObscure = !_isObscure),
                       icon: Icon(
                         _isObscure ? Icons.visibility_off : Icons.visibility,
                         color: AppColors.dark,
-                        size: 20,
+                        size: 30,
                       ),
                     )
                   : null,
