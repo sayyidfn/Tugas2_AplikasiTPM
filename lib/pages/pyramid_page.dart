@@ -100,7 +100,7 @@ class _PyramidPageState extends State<PyramidPage> {
           padding: const EdgeInsets.symmetric(horizontal: 40),
           child: Column(
             children: [
-              const SizedBox(height: 30),
+              const SizedBox(height: 70),
 
               SvgPicture.asset(widget.menuData.iconPath, height: 160),
               const SizedBox(height: 30),

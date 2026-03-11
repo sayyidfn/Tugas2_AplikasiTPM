@@ -17,7 +17,10 @@ class _SumPageState extends State<SumPage> {
 
   void _calculateLength() {
     if (_textController.text.trim().isEmpty) {
-      _showSnack("Teks tidak boleh kosong! Silahkan ketik sesuatu", Colors.red.shade700);
+      _showSnack(
+        "Teks tidak boleh kosong! Silahkan ketik sesuatu",
+        Colors.red.shade700,
+      );
 
       setState(() {
         _result = 0;
@@ -35,11 +38,15 @@ class _SumPageState extends State<SumPage> {
       SnackBar(
         content: Text(
           pesan,
-          style: const TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
         ),
         backgroundColor: warna,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        duration: const Duration(seconds: 2),
       ),
     );
   }
@@ -66,7 +73,7 @@ class _SumPageState extends State<SumPage> {
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Column(
             children: [
-              const SizedBox(height: 60),
+              const SizedBox(height: 70),
 
               SvgPicture.asset(widget.menuData.iconPath, height: 120),
               const SizedBox(height: 20),
@@ -110,29 +117,24 @@ class _SumPageState extends State<SumPage> {
               ),
               const SizedBox(height: 25),
 
-              GestureDetector(
-                onTap: _calculateLength,
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(vertical: 18),
-                  decoration: BoxDecoration(
-                    color: AppColors.navy,
-                    borderRadius: BorderRadius.circular(8),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.3),
-                        blurRadius: 5,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
+              SizedBox(
+                width: double.infinity,
+                height: 55,
+                child: ElevatedButton(
+                  onPressed: _calculateLength,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.navy,
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ),
-                  alignment: Alignment.center,
                   child: const Text(
                     "HITUNG (Σ)",
                     style: TextStyle(
+                      fontSize: 16,
                       color: Colors.white,
                       fontWeight: FontWeight.w800,
-                      fontSize: 16,
                       letterSpacing: 1.5,
                     ),
                   ),

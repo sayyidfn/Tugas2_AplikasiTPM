@@ -19,7 +19,10 @@ class _CalculatorPageState extends State<CalculatorPage> {
   void _calculate(bool isAddition) {
     if (_num1Controller.text.trim().isEmpty ||
         _num2Controller.text.trim().isEmpty) {
-      _showSnack("Angka A dan Angka B tidak boleh kosong!", Colors.red.shade700);
+      _showSnack(
+        "Angka A dan Angka B tidak boleh kosong!",
+        Colors.red.shade700,
+      );
       return;
     }
 
@@ -40,11 +43,15 @@ class _CalculatorPageState extends State<CalculatorPage> {
       SnackBar(
         content: Text(
           pesan,
-          style: const TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
         ),
         backgroundColor: warna,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        duration: const Duration(seconds: 2),
       ),
     );
   }
@@ -72,7 +79,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Column(
             children: [
-              const SizedBox(height: 60),
+              const SizedBox(height: 70),
 
               const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -155,53 +162,49 @@ class _CalculatorPageState extends State<CalculatorPage> {
   }
 
   Widget _buildTextField(TextEditingController controller, String hint) {
-    return TextField(
-      controller: controller,
-      keyboardType: TextInputType.number,
-      style: const TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.bold,
-        color: AppColors.dark,
-      ),
-      decoration: InputDecoration(
-        hintText: hint,
-        hintStyle: TextStyle(
-          color: AppColors.dark.withValues(alpha: 0.3),
-          fontWeight: FontWeight.normal,
+    return SizedBox(
+      height: 50,
+      child: TextField(
+        controller: controller,
+        keyboardType: TextInputType.number,
+        style: const TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          color: AppColors.dark,
         ),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 15,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: AppColors.dark, width: 1.5),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: AppColors.dark, width: 2.5),
+        decoration: InputDecoration(
+          hintText: hint,
+          hintStyle: TextStyle(
+            color: AppColors.dark.withValues(alpha: 0.3),
+            fontWeight: FontWeight.normal,
+          ),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 0,
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: const BorderSide(color: AppColors.dark, width: 1.5),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: const BorderSide(color: AppColors.dark, width: 2.0),
+          ),
         ),
       ),
     );
   }
 
   Widget _buildButton(String text, VoidCallback onTap) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        decoration: BoxDecoration(
-          color: AppColors.navy,
-          borderRadius: BorderRadius.circular(8),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.3),
-              blurRadius: 5,
-              offset: const Offset(0, 3),
-            ),
-          ],
+    return SizedBox(
+      height: 55,
+      child: ElevatedButton(
+        onPressed: onTap,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.navy,
+          elevation: 3,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
-        alignment: Alignment.center,
         child: Text(
           text,
           style: const TextStyle(
