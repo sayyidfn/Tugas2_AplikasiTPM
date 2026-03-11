@@ -7,6 +7,6 @@ class UserModel {
 
   static List<UserModel> groupData = [
     UserModel(name: 'Sayyid Fakhri N', nim: '123230172', username: 'Fakhri'),
-    UserModel(name: 'Nama Anggota 2', nim: '123230XXX', username: 'User2'),
+    UserModel(name: 'Aziz Surya Pradana', nim: '123230172', username: 'Aziz'),
   ];
 }
