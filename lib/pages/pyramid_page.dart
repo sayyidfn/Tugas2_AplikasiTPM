@@ -18,7 +18,7 @@ class _PyramidPageState extends State<PyramidPage> {
   final TextEditingController _heightController = TextEditingController();
 
   double? _volume;
-  double? _surfaceArea; 
+  double? _surfaceArea;
 
   void _calculateAll() {
     String lText = _lengthController.text.trim();
@@ -89,23 +89,9 @@ class _PyramidPageState extends State<PyramidPage> {
     return Scaffold(
       backgroundColor: AppColors.bg,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back_ios_new,
-            color: AppColors.dark,
-            size: 20,
-          ),
-          onPressed: () => Navigator.pop(context),
-        ),
         title: Text(
           widget.menuData.title,
-          style: AppTextStyles.heading.copyWith(
-            fontSize: 22,
-            fontWeight: FontWeight.w900,
-            color: AppColors.dark,
-          ),
+          style: AppTextStyles.heading.copyWith(fontSize: 26),
         ),
         centerTitle: true,
       ),
@@ -114,9 +100,9 @@ class _PyramidPageState extends State<PyramidPage> {
           padding: const EdgeInsets.symmetric(horizontal: 40),
           child: Column(
             children: [
-              const SizedBox(height: 10),
+              const SizedBox(height: 30),
 
-              SvgPicture.asset(widget.menuData.iconPath, height: 140),
+              SvgPicture.asset(widget.menuData.iconPath, height: 160),
               const SizedBox(height: 30),
 
               _buildInputField(
