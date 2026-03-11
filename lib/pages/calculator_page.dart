@@ -17,6 +17,24 @@ class _CalculatorPageState extends State<CalculatorPage> {
   double _result = 0.0;
 
   void _calculate(bool isAddition) {
+    if (_num1Controller.text.trim().isEmpty ||
+        _num2Controller.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text(
+            "Angka A dan Angka B tidak boleh kosong!",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          backgroundColor: Colors.red.shade600,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      );
+      return;
+    }
+
     double num1 = double.tryParse(_num1Controller.text) ?? 0.0;
     double num2 = double.tryParse(_num2Controller.text) ?? 0.0;
 
@@ -41,23 +59,9 @@ class _CalculatorPageState extends State<CalculatorPage> {
     return Scaffold(
       backgroundColor: AppColors.bg,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back_ios_new,
-            color: AppColors.dark,
-            size: 20,
-          ),
-          onPressed: () => Navigator.pop(context),
-        ),
         title: Text(
           widget.menuData.title,
-          style: AppTextStyles.heading.copyWith(
-            fontSize: 22,
-            fontWeight: FontWeight.w900,
-            color: AppColors.dark,
-          ),
+          style: AppTextStyles.heading.copyWith(fontSize: 26),
         ),
         centerTitle: true,
       ),
@@ -160,9 +164,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
       decoration: InputDecoration(
         hintText: hint,
         hintStyle: TextStyle(
-          color: AppColors.dark.withValues(
-            alpha: 0.3,
-          ),
+          color: AppColors.dark.withValues(alpha: 0.3),
           fontWeight: FontWeight.normal,
         ),
         contentPadding: const EdgeInsets.symmetric(

@@ -17,28 +17,34 @@ class _LoginPageState extends State<LoginPage> {
   bool _isObscure = true;
 
   // login logic
-  void _handleLogin() {
+void _handleLogin() {
     String usernameInput = _usernameController.text.trim();
     String passwordInput = _passwordController.text.trim();
 
     if (usernameInput.isEmpty || passwordInput.isEmpty) {
-      _showSnack("Field tidak boleh kosong!", Colors.orange);
+      _showSnack("Username dan Password wajib diisi!", Colors.orange);
       return;
     }
 
+    // 3. Logika Pencarian User dengan Handling jika tidak ketemu
     try {
-      // Search user
-      UserModel user = UserModel.groupData.firstWhere(
+      final userExists = UserModel.groupData.where(
         (u) => u.username == usernameInput && u.nim == passwordInput,
       );
 
-      _showSnack("Selamat datang, ${user.username}!", Colors.green);
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage(loginUser: user)),
-      );
+      if (userExists.isNotEmpty) {
+        UserModel user = userExists.first;
+        _showSnack("Selamat datang, ${user.username}!", Colors.green);
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage(loginUser: user)),
+        );
+      } else {
+        _showSnack("Username atau Password salah!", Colors.red);
+      }
     } catch (e) {
-      _showSnack("Username atau password salah!", Colors.red);
+      _showSnack("Terjadi kesalahan sistem. Coba lagi.", Colors.grey);
     }
   }
 
@@ -46,9 +52,19 @@ class _LoginPageState extends State<LoginPage> {
   void _showSnack(String pesan, Color warna) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(pesan, style: const TextStyle(color: Colors.white)),
+        content: Text(
+          pesan,
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         backgroundColor: warna,
         behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        duration: const Duration(seconds: 2), 
       ),
     );
   }
