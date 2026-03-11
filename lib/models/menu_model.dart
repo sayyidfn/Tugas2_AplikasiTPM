@@ -9,13 +9,13 @@ import 'package:tugasaplikasitpm/pages/sum_page.dart';
 class MenuModel {
   final String title;
   final String iconPath;
-  final Widget destination;
+  final Widget Function(MenuModel) pageBuilder;
   final bool isFullWidth;
 
   MenuModel({
     required this.title,
     required this.iconPath,
-    required this.destination,
+    required this.pageBuilder,
     this.isFullWidth = false,
   });
 
@@ -23,33 +23,33 @@ class MenuModel {
     MenuModel(
       title: "STOPWATCH",
       iconPath: "assets/icons/stopwatch.svg",
-      destination: const StopwatchPage(),
+      pageBuilder: (m) => StopwatchPage(menuData: m),
       isFullWidth: true,
     ),
     MenuModel(
-      title: "DATA KELOMPOK",
+      title: "ANGGOTA KELOMPOK",
       iconPath: "assets/icons/group.svg",
-      destination: const GroupDataPage(),
+      pageBuilder: (m) => const GroupDataPage(),
     ),
     MenuModel(
       title: "TAMBAH & KURANG",
       iconPath: "assets/icons/math.svg",
-      destination: const CalculatorPage(),
+      pageBuilder: (m) => const CalculatorPage(),
     ),
     MenuModel(
-      title: "TOTAL ANGKA INPUT",
+      title: "HITUNG KARAKTER",
       iconPath: "assets/icons/sigma.svg",
-      destination: const SumPage(),
+      pageBuilder: (m) => const SumPage(),
     ),
     MenuModel(
-      title: "TEBAK ANGKA",
+      title: "TEBAK BILANGAN",
       iconPath: "assets/icons/guess.svg",
-      destination: const GuessNumberPage(),
+      pageBuilder: (m) => const GuessNumberPage(),
     ),
     MenuModel(
       title: "KALKULATOR PIRAMID",
       iconPath: "assets/icons/pyramid.svg",
-      destination: const PyramidPage(),
+      pageBuilder: (m) => PyramidPage(),
       isFullWidth: true,
     ),
   ];

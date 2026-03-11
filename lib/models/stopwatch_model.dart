@@ -7,6 +7,7 @@ class StopwatchModel {
 
   int seconds = 0;
   bool isRunning = false;
+  List<String> laps = [];
   Timer? _timer;
   Function(int)? onTick;
   Function(bool)? onStatusChange;
@@ -15,6 +16,7 @@ class StopwatchModel {
     if (isRunning) {
       _timer?.cancel();
       isRunning = false;
+      updateUI();
     } else {
       isRunning = true;
       _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -26,10 +28,18 @@ class StopwatchModel {
     if (onStatusChange != null) onStatusChange!(isRunning);
   }
 
+  void addLap(Function updateUI) {
+    if (isRunning) {
+      laps.insert(0, formatTime());
+      updateUI();
+    }
+  }
+
   void reset(Function updateUI) {
     _timer?.cancel();
     seconds = 0;
     isRunning = false;
+    laps.clear();
     updateUI();
   }
 

@@ -16,7 +16,6 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   bool _isObscure = true;
 
-
   // login logic
   void _handleLogin() {
     String usernameInput = _usernameController.text.trim();
@@ -28,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     try {
-      // Search user 
+      // Search user
       UserModel user = UserModel.groupData.firstWhere(
         (u) => u.username == usernameInput && u.nim == passwordInput,
       );
@@ -68,7 +67,6 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: AppColors.bg,
       body: Stack(
         children: [
-          
           // Background image
           Positioned.fill(
             top: 75,
@@ -99,12 +97,12 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
 
-                  const SizedBox(height: 130),
+                  const SizedBox(height: 90),
 
                   // Input
                   _buildInputGrup(),
 
-                  const SizedBox(height: 60),
+                  const SizedBox(height: 40),
 
                   // Button Login
                   _buildCustomButton(),
