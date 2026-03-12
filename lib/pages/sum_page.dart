@@ -16,20 +16,34 @@ class _SumPageState extends State<SumPage> {
   int _result = 0;
 
   void _calculateLength() {
-    if (_textController.text.trim().isEmpty) {
+    String rawText = _textController.text;
+
+    // 1. Handling Input Kosong atau Hanya Spasi
+    if (rawText.trim().isEmpty) {
       _showSnack(
-        "Teks tidak boleh kosong! Silahkan ketik sesuatu",
+        "Teks tidak boleh kosong! Silakan ketik sesuatu.",
         Colors.red.shade700,
       );
-
       setState(() {
         _result = 0;
       });
       return;
     }
 
+    // 2. Handling Limit Memori/Performa
+    if (rawText.length > 50000) {
+      _showSnack(
+        "Teks terlalu panjang! Maksimal 50.000 karakter.",
+        Colors.orange.shade900,
+      );
+      return;
+    }
+
+    // 3. Eksekusi Hasil
     setState(() {
-      _result = _textController.text.length;
+      // rawText.length akan menghitung semua karakter TERMASUK spasi.
+      // Jika Anda ingin menghitung TANPA spasi di awal/akhir, gunakan rawText.trim().length
+      _result = rawText.length;
     });
   }
 
@@ -73,10 +87,10 @@ class _SumPageState extends State<SumPage> {
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Column(
             children: [
-              const SizedBox(height: 70),
+              const SizedBox(height: 30),
 
-              SvgPicture.asset(widget.menuData.iconPath, height: 120),
-              const SizedBox(height: 20),
+              SvgPicture.asset(widget.menuData.iconPath, height: 110),
+              const SizedBox(height: 10),
 
               const Text(
                 "Masukkan Teks",
@@ -86,7 +100,7 @@ class _SumPageState extends State<SumPage> {
                   color: AppColors.dark,
                 ),
               ),
-              const SizedBox(height: 15),
+              const SizedBox(height: 10),
 
               TextField(
                 controller: _textController,
@@ -115,7 +129,7 @@ class _SumPageState extends State<SumPage> {
                   ),
                 ),
               ),
-              const SizedBox(height: 25),
+              const SizedBox(height: 15),
 
               SizedBox(
                 width: double.infinity,
@@ -140,7 +154,7 @@ class _SumPageState extends State<SumPage> {
                   ),
                 ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 20),
 
               const Text(
                 "Hasil Penghitungan (Σ):",

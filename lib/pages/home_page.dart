@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tugasaplikasitpm/main.dart';
 import 'package:tugasaplikasitpm/models/menu_model.dart';
 import 'package:tugasaplikasitpm/models/stopwatch_model.dart';
@@ -175,7 +176,7 @@ class _HomePageState extends State<HomePage> {
                               _stopwatch.isRunning
                                   ? Icons.pause
                                   : Icons.play_arrow,
-                              size: 20,
+                              size: 18,
                               color: AppColors.dark,
                             ),
                           ),
@@ -184,7 +185,7 @@ class _HomePageState extends State<HomePage> {
                             onTap: () => _stopwatch.reset(),
                             child: const Icon(
                               Icons.stop,
-                              size: 20,
+                              size: 18,
                               color: AppColors.dark,
                             ),
                           ),
@@ -195,7 +196,11 @@ class _HomePageState extends State<HomePage> {
 
                   const SizedBox(height: 6),
                   Container(
-                    padding: const EdgeInsets.symmetric(vertical: 2),
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 4,
+                      horizontal: 2,
+                    ),
                     decoration: BoxDecoration(
                       border: Border.all(
                         color: Colors.black.withValues(alpha: 0.5),
@@ -208,11 +213,10 @@ class _HomePageState extends State<HomePage> {
                         fit: BoxFit.scaleDown,
                         child: Text(
                           _stopwatch.formatTime(),
-                          style: AppTextStyles.heading.copyWith(
+                          style: GoogleFonts.robotoMono(
                             fontWeight: FontWeight.bold,
                             letterSpacing: 2,
-                            fontSize: 40,
-                            height: 1.5,
+                            fontSize: 54,
                           ),
                         ),
                       ),

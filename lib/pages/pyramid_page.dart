@@ -1,8 +1,8 @@
-import 'dart:math'; // Wajib ditambahkan untuk perhitungan Pythagoras
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tugasaplikasitpm/main.dart';
 import 'package:tugasaplikasitpm/models/menu_model.dart';
+import 'dart:math';
 
 class PyramidPage extends StatefulWidget {
   final MenuModel menuData;
@@ -25,14 +25,16 @@ class _PyramidPageState extends State<PyramidPage> {
     String wText = _widthController.text.trim();
     String hText = _heightController.text.trim();
 
+    // 1. Handling Input Kosong
     if (lText.isEmpty || wText.isEmpty || hText.isEmpty) {
       _showSnack(
         "Semua kolom (Panjang, Lebar, Tinggi) wajib diisi!",
-        Colors.orange.shade700,
+        Colors.red.shade700,
       );
       return;
     }
 
+    // 2. Handling Format Angka (Validasi Huruf/Simbol)
     double? length = double.tryParse(lText);
     double? width = double.tryParse(wText);
     double? height = double.tryParse(hText);
@@ -42,18 +44,25 @@ class _PyramidPageState extends State<PyramidPage> {
       return;
     }
 
+    // 3. Handling Nilai Nol atau Negatif (Penting untuk Geometri)
+    if (length <= 0 || width <= 0 || height <= 0) {
+      _showSnack(
+        "Dimensi piramida harus lebih besar dari nol!",
+        Colors.red.shade700,
+      );
+      return;
+    }
+
+    // 4. Perhitungan Utama
     setState(() {
       double baseArea = length * width;
-
       _volume = (1 / 3) * baseArea * height;
 
       double slantHeightLength = sqrt(pow(height, 2) + pow(width / 2, 2));
-
       double slantHeightWidth = sqrt(pow(height, 2) + pow(length / 2, 2));
 
       double uprightArea =
           (length * slantHeightLength) + (width * slantHeightWidth);
-
       _surfaceArea = baseArea + uprightArea;
     });
   }
@@ -100,10 +109,10 @@ class _PyramidPageState extends State<PyramidPage> {
           padding: const EdgeInsets.symmetric(horizontal: 40),
           child: Column(
             children: [
-              const SizedBox(height: 70),
+              const SizedBox(height: 30),
 
               SvgPicture.asset(widget.menuData.iconPath, height: 160),
-              const SizedBox(height: 30),
+              const SizedBox(height: 20),
 
               _buildInputField(
                 label: "Masukkan Panjang Alas:",
@@ -221,6 +230,11 @@ class _PyramidPageState extends State<PyramidPage> {
               color: AppColors.dark,
             ),
             decoration: InputDecoration(
+              hintText: "Contoh: 10.5",
+              hintStyle: TextStyle(
+                color: AppColors.dark.withValues(alpha: 0.3),
+                fontWeight: FontWeight.normal,
+              ),
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 16,
                 vertical: 0,

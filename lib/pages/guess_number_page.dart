@@ -19,8 +19,12 @@ class _GuessNumberPageState extends State<GuessNumberPage> {
   bool _isPrime = false;
 
   bool _checkIfPrime(int n) {
-    if (n <= 1) return false;
-    for (int i = 2; i <= n ~/ 2; i++) {
+    if (n < 2) return false;
+    if (n == 2) return true;
+    if (n % 2 == 0) return false; // Bilangan genap selain 2 pasti bukan prima
+
+    // Hanya cek sampai akar dari n untuk efisiensi maksimal
+    for (int i = 3; i * i <= n; i += 2) {
       if (n % i == 0) return false;
     }
     return true;
@@ -29,14 +33,33 @@ class _GuessNumberPageState extends State<GuessNumberPage> {
   void _handleCheck() {
     String input = _numberController.text.trim();
 
+    // 1. Handling Input Kosong
     if (input.isEmpty) {
-      _showSnack("Masukkan angka terlebih dahulu!", Colors.orange.shade700);
+      _showSnack("Masukkan angka terlebih dahulu!", Colors.red.shade700);
       return;
     }
 
+    // 2. Handling Format Angka (Harus bulat, bukan desimal atau huruf)
     int? num = int.tryParse(input);
     if (num == null) {
       _showSnack("Input harus berupa angka bulat!", Colors.red.shade700);
+      return;
+    }
+
+    // 3. Handling Angka Negatif
+    // Bilangan Ganjil/Genap dan Prima biasanya didefinisikan untuk bilangan bulat positif (asli)
+    if (num < 0) {
+      _showSnack("Masukkan angka positif (>= 0)!", Colors.red.shade700);
+      return;
+    }
+
+    // 4. Handling Angka Terlalu Besar (Mencegah Lag pada Fungsi Prima)
+    // Menghitung bilangan prima untuk angka di atas 10 juta bisa membuat UI "freeze" sebentar
+    if (num > 10000000) {
+      _showSnack(
+        "Angka terlalu besar! Maksimal 10.000.000 demi performa.",
+        Colors.orange.shade700,
+      );
       return;
     }
 
@@ -87,10 +110,10 @@ class _GuessNumberPageState extends State<GuessNumberPage> {
           padding: const EdgeInsets.symmetric(horizontal: 40),
           child: Column(
             children: [
-              const SizedBox(height: 70),
+              const SizedBox(height: 30),
 
               SvgPicture.asset(widget.menuData.iconPath, height: 140),
-              const SizedBox(height: 15),
+              const SizedBox(height: 10),
 
               const Text(
                 "Cek Angka(Ganjil/Genap/Prima?)",
@@ -101,7 +124,7 @@ class _GuessNumberPageState extends State<GuessNumberPage> {
                 ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 25),
+              const SizedBox(height: 15),
 
               Align(
                 alignment: Alignment.centerLeft,
@@ -127,6 +150,11 @@ class _GuessNumberPageState extends State<GuessNumberPage> {
                     color: AppColors.dark,
                   ),
                   decoration: InputDecoration(
+                    hintText: "Contoh: 17",
+                    hintStyle: TextStyle(
+                      color: AppColors.dark.withValues(alpha: 0.3),
+                      fontWeight: FontWeight.normal,
+                    ),
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 16,
                       vertical: 0,
@@ -148,7 +176,7 @@ class _GuessNumberPageState extends State<GuessNumberPage> {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
 
               SizedBox(
                 width: double.infinity,
@@ -173,7 +201,7 @@ class _GuessNumberPageState extends State<GuessNumberPage> {
                   ),
                 ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 35),
 
               if (_lastCheckedNumber != null) ...[
                 Text(
@@ -204,7 +232,6 @@ class _GuessNumberPageState extends State<GuessNumberPage> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 40),
               ],
             ],
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tugasaplikasitpm/main.dart';
 import 'package:tugasaplikasitpm/models/menu_model.dart';
 import 'package:tugasaplikasitpm/models/stopwatch_model.dart';
@@ -28,24 +29,25 @@ class _StopwatchPageState extends State<StopwatchPage> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25),
+          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
           child: ListenableBuilder(
             listenable: _stopwatch,
             builder: (context, child) {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 20),
                   SvgPicture.asset(widget.menuData.iconPath, height: 180),
                   const SizedBox(height: 10),
                   Text(
                     _stopwatch.formatTime(),
-                    style: AppTextStyles.heading.copyWith(
-                      fontSize: 42,
-                      letterSpacing: 2,
+                    style: GoogleFonts.robotoMono(
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.2,
+                      fontSize: 44,
                     ),
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -74,7 +76,7 @@ class _StopwatchPageState extends State<StopwatchPage> {
                               ),
                             ),
                           ),
-                          const SizedBox(height: 10),
+                          const SizedBox(height: 5),
                           const Text(
                             "START/STOP",
                             style: TextStyle(

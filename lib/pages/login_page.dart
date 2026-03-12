@@ -22,7 +22,7 @@ void _handleLogin() {
     String passwordInput = _passwordController.text.trim();
 
     if (usernameInput.isEmpty || passwordInput.isEmpty) {
-      _showSnack("Username dan Password wajib diisi!", Colors.orange);
+      _showSnack("Username dan Password wajib diisi!", Colors.red.shade700);
       return;
     }
 
@@ -34,14 +34,14 @@ void _handleLogin() {
 
       if (userExists.isNotEmpty) {
         UserModel user = userExists.first;
-        _showSnack("Selamat datang, ${user.username}!", Colors.green);
+        _showSnack("Selamat datang, ${user.username}!", Colors.green.shade700);
 
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => HomePage(loginUser: user)),
         );
       } else {
-        _showSnack("Username atau Password salah!", Colors.red);
+        _showSnack("Username atau Password salah!", Colors.red.shade700);
       }
     } catch (e) {
       _showSnack("Terjadi kesalahan sistem. Coba lagi.", Colors.grey);

@@ -17,8 +17,12 @@ class _CalculatorPageState extends State<CalculatorPage> {
   double _result = 0.0;
 
   void _calculate(bool isAddition) {
-    if (_num1Controller.text.trim().isEmpty ||
-        _num2Controller.text.trim().isEmpty) {
+    // 1. Ambil teks mentah
+    String rawNum1 = _num1Controller.text.trim();
+    String rawNum2 = _num2Controller.text.trim();
+
+    // 2. Cek Kosong
+    if (rawNum1.isEmpty || rawNum2.isEmpty) {
       _showSnack(
         "Angka A dan Angka B tidak boleh kosong!",
         Colors.red.shade700,
@@ -26,9 +30,20 @@ class _CalculatorPageState extends State<CalculatorPage> {
       return;
     }
 
-    double num1 = double.tryParse(_num1Controller.text) ?? 0.0;
-    double num2 = double.tryParse(_num2Controller.text) ?? 0.0;
+    // 3. Parsing dan Cek Validitas Angka
+    double? num1 = double.tryParse(rawNum1);
+    double? num2 = double.tryParse(rawNum2);
 
+    // Jika salah satu null, berarti input bukan angka valid
+    if (num1 == null || num2 == null) {
+      _showSnack(
+        "Input harus berupa angka! Jangan masukkan huruf atau simbol.",
+        Colors.red.shade900,
+      );
+      return;
+    }
+
+    // 4. Jika Valid, baru jalankan setState
     setState(() {
       if (isAddition) {
         _result = num1 + num2;
@@ -79,7 +94,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Column(
             children: [
-              const SizedBox(height: 70),
+              const SizedBox(height: 30),
 
               const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -93,7 +108,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
                       height: 1,
                     ),
                   ),
-                  SizedBox(width: 30),
+                  SizedBox(width: 20),
                   Text(
                     "-",
                     style: TextStyle(
@@ -105,7 +120,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 20),
 
               const Text(
                 "Masukkan Angka A dan B:",
@@ -115,25 +130,25 @@ class _CalculatorPageState extends State<CalculatorPage> {
                   color: AppColors.dark,
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
 
-              _buildTextField(_num1Controller, "Masukan angka A"),
-              const SizedBox(height: 15),
-              _buildTextField(_num2Controller, "Masukan angka B"),
-              const SizedBox(height: 35),
+              _buildTextField(_num1Controller),
+              const SizedBox(height: 10),
+              _buildTextField(_num2Controller),
+              const SizedBox(height: 25),
 
               Row(
                 children: [
                   Expanded(
                     child: _buildButton("TAMBAH (+)", () => _calculate(true)),
                   ),
-                  const SizedBox(width: 15),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: _buildButton("KURANG (-)", () => _calculate(false)),
                   ),
                 ],
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 30),
 
               const Text(
                 "Hasil Operasi:",
@@ -161,7 +176,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
     );
   }
 
-  Widget _buildTextField(TextEditingController controller, String hint) {
+  Widget _buildTextField(TextEditingController controller) {
     return SizedBox(
       height: 50,
       child: TextField(
@@ -173,7 +188,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
           color: AppColors.dark,
         ),
         decoration: InputDecoration(
-          hintText: hint,
+          hintText: "Contoh: 99.2",
           hintStyle: TextStyle(
             color: AppColors.dark.withValues(alpha: 0.3),
             fontWeight: FontWeight.normal,
