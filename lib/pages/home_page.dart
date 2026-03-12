@@ -17,12 +17,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final StopwatchModel _stopwatch = StopwatchModel();
 
-  void _refresh() {
-    if (mounted) {
-      setState(() {});
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final allMenus = MenuModel.mainMenus;
@@ -153,73 +147,80 @@ class _HomePageState extends State<HomePage> {
         const SizedBox(width: 15),
 
         Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
+          child: ListenableBuilder(
+            listenable: _stopwatch,
+            builder: (context, child) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    menu.title,
-                    style: AppTextStyles.heading.copyWith(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      height: 1.0,
-                    ),
-                  ),
                   Row(
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      GestureDetector(
-                        onTap: () => _stopwatch.toggle(_refresh),
-                        child: Icon(
-                          _stopwatch.isRunning ? Icons.pause : Icons.play_arrow,
-                          size: 20,
-                          color: AppColors.dark,
+                      Text(
+                        menu.title,
+                        style: AppTextStyles.heading.copyWith(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          height: 1.0,
                         ),
                       ),
-                      const Text("/"),
-                      GestureDetector(
-                        onTap: () => _stopwatch.reset(_refresh),
-                        child: const Icon(
-                          Icons.stop,
-                          size: 20,
-                          color: AppColors.dark,
-                        ),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          GestureDetector(
+                            onTap: () => _stopwatch.toggle(),
+                            child: Icon(
+                              _stopwatch.isRunning
+                                  ? Icons.pause
+                                  : Icons.play_arrow,
+                              size: 20,
+                              color: AppColors.dark,
+                            ),
+                          ),
+                          const Text("/"),
+                          GestureDetector(
+                            onTap: () => _stopwatch.reset(),
+                            child: const Icon(
+                              Icons.stop,
+                              size: 20,
+                              color: AppColors.dark,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
-              ),
 
-              const SizedBox(height: 6),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 2),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.black.withValues(alpha: 0.5),
-                    width: 1.5,
-                  ),
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: Center(
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      _stopwatch.formatTime(),
-                      style: AppTextStyles.heading.copyWith(
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 2,
-                        fontSize: 40,
-                        height: 1.5,
+                  const SizedBox(height: 6),
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 2),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.black.withValues(alpha: 0.5),
+                        width: 1.5,
+                      ),
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: Center(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          _stopwatch.formatTime(),
+                          style: AppTextStyles.heading.copyWith(
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 2,
+                            fontSize: 40,
+                            height: 1.5,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ),
-            ],
+                ],
+              );
+            },
           ),
         ),
       ],

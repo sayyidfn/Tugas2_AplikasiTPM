@@ -15,12 +15,6 @@ class StopwatchPage extends StatefulWidget {
 class _StopwatchPageState extends State<StopwatchPage> {
   final StopwatchModel _stopwatch = StopwatchModel();
 
-  void _refresh() {
-    if (mounted) {
-      setState(() {});
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,122 +29,138 @@ class _StopwatchPageState extends State<StopwatchPage> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(height: 70),
-              SvgPicture.asset(widget.menuData.iconPath, height: 200),
-              const SizedBox(height: 20),
-              Text(
-                _stopwatch.formatTime(),
-                style: AppTextStyles.heading.copyWith(
-                  fontSize: 56,
-                  letterSpacing: 2,
-                ),
-              ),
-              const SizedBox(height: 30),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          child: ListenableBuilder(
+            listenable: _stopwatch,
+            builder: (context, child) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  _buildSideButton(
-                    icon: Icons.replay,
-                    onTap: () => _stopwatch.reset(_refresh),
+                  const SizedBox(height: 50),
+                  SvgPicture.asset(widget.menuData.iconPath, height: 180),
+                  const SizedBox(height: 10),
+                  Text(
+                    _stopwatch.formatTime(),
+                    style: AppTextStyles.heading.copyWith(
+                      fontSize: 42,
+                      letterSpacing: 2,
+                    ),
                   ),
-                  Column(
+                  const SizedBox(height: 30),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      GestureDetector(
-                        onTap: () => _stopwatch.toggle(_refresh),
-                        child: Container(
-                          height: 80,
-                          width: 80,
-                          decoration: BoxDecoration(
-                            color: AppColors.navy,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            _stopwatch.isRunning
-                                ? Icons.pause
-                                : Icons.play_arrow,
-                            color: Colors.white,
-                            size: 44,
-                          ),
-                        ),
+                      _buildSideButton(
+                        icon: Icons.replay,
+                        onTap: () => _stopwatch.reset(),
                       ),
-                      const SizedBox(height: 10),
-                      const Text(
-                        "START/STOP",
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.dark,
-                        ),
+                      Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () => _stopwatch.toggle(),
+
+                            child: Container(
+                              height: 70,
+                              width: 70,
+                              decoration: BoxDecoration(
+                                color: AppColors.navy,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                _stopwatch.isRunning
+                                    ? Icons.pause
+                                    : Icons.play_arrow,
+                                color: Colors.white,
+                                size: 44,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          const Text(
+                            "START/STOP",
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.dark,
+                            ),
+                          ),
+                        ],
+                      ),
+                      _buildSideButton(
+                        icon: Icons.flag,
+                        onTap: () => _stopwatch.addLap(),
                       ),
                     ],
                   ),
-                  _buildSideButton(
-                    icon: Icons.flag,
-                    onTap: () => _stopwatch.addLap(_refresh),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 30),
-              Expanded(
-                child: Column(
-                  children: [
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  const SizedBox(height: 10),
+                  Expanded(
+                    child: Column(
                       children: [
-                        Text(
-                          "Lap",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.dark,
-                          ),
+                        const Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Lap",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.dark,
+                              ),
+                            ),
+                            Text(
+                              "Time",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.dark,
+                              ),
+                            ),
+                          ],
                         ),
-                        Text(
-                          "Time",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.dark,
-                          ),
+                        const Divider(color: AppColors.dark, thickness: 1),
+                        Expanded(
+                          child: _stopwatch.laps.isEmpty
+                              ? Center(child: Text("Belum ada data lap"))
+                              : ListView.builder(
+                                  key: ValueKey(_stopwatch.laps.length),
+                                  itemCount: _stopwatch.laps.length,
+                                  itemBuilder: (context, index) {
+                                    int lapNumber =
+                                        _stopwatch.laps.length - index;
+                                    return Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: 8,
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            lapNumber.toString().padLeft(
+                                              2,
+                                              '0',
+                                            ),
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                          Text(
+                                            _stopwatch.laps[index],
+                                            style: const TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
                         ),
                       ],
                     ),
-                    const Divider(color: AppColors.dark, thickness: 1),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: _stopwatch.laps.length,
-                        itemBuilder: (context, index) {
-                          int lapNumber = _stopwatch.laps.length - index;
-                          return Padding(
-                            padding: EdgeInsets.symmetric(vertical: 8),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  lapNumber.toString().padLeft(2, '0'),
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                Text(
-                                  _stopwatch.laps[index],
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),
@@ -164,8 +174,8 @@ class _StopwatchPageState extends State<StopwatchPage> {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 50,
-        width: 50,
+        height: 40,
+        width: 40,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           border: Border.all(color: AppColors.dark, width: 1.5),

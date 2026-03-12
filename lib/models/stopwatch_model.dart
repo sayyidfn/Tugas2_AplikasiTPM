@@ -1,52 +1,51 @@
 import 'dart:async';
-
-class StopwatchModel {
+import 'package:flutter/material.dart'; 
+class StopwatchModel extends ChangeNotifier {
   static final StopwatchModel _instance = StopwatchModel._internal();
   factory StopwatchModel() => _instance;
   StopwatchModel._internal();
 
-  int seconds = 0;
-  bool isRunning = false;
-  List<String> laps = [];
+  final Stopwatch _nativeStopwatch = Stopwatch();
   Timer? _timer;
-  Function(int)? onTick;
-  Function(bool)? onStatusChange;
+  List<String> laps = [];
 
-  void toggle(Function updateUI) {
-    if (isRunning) {
+  bool get isRunning => _nativeStopwatch.isRunning;
+
+  void toggle() {
+    if (_nativeStopwatch.isRunning) {
+      _nativeStopwatch.stop();
       _timer?.cancel();
-      isRunning = false;
-      updateUI();
+      notifyListeners();
     } else {
-      isRunning = true;
-      _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-        seconds++;
-        updateUI();
-        if (onTick != null) onTick!(seconds);
+      _nativeStopwatch.start();
+      _timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
+        notifyListeners();
       });
     }
-    if (onStatusChange != null) onStatusChange!(isRunning);
   }
 
-  void addLap(Function updateUI) {
-    if (isRunning) {
+  void addLap() {
+    if (_nativeStopwatch.isRunning) {
       laps.insert(0, formatTime());
-      updateUI();
+      notifyListeners();
     }
   }
 
-  void reset(Function updateUI) {
+  void reset() {
+    _nativeStopwatch.reset();
+    _nativeStopwatch.stop();
     _timer?.cancel();
-    seconds = 0;
-    isRunning = false;
     laps.clear();
-    updateUI();
+    notifyListeners();
   }
 
   String formatTime() {
-    int h = seconds ~/ 3600;
-    int m = (seconds % 3600) ~/ 60;
-    int s = seconds % 60;
-    return "${h.toString().padLeft(2, '0')}:${m.toString().padLeft(2, '0')}:${s.toString().padLeft(2, '0')}";
+    int milliseconds = _nativeStopwatch.elapsedMilliseconds;
+    int h = milliseconds ~/ 3600000;
+    int m = (milliseconds ~/ 60000) % 60;
+    int s = (milliseconds ~/ 1000) % 60;
+    int ms = (milliseconds % 1000) ~/ 100;
+
+    return "${h.toString().padLeft(2, '0')}:${m.toString().padLeft(2, '0')}:${s.toString().padLeft(2, '0')}.${ms.toString().padLeft(2, '0')}";
   }
 }
