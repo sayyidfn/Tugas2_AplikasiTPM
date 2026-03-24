@@ -25,7 +25,7 @@ class _PyramidPageState extends State<PyramidPage> {
     String wText = _widthController.text.trim();
     String hText = _heightController.text.trim();
 
-    // 1. Handling Input Kosong
+    // Handling Input Kosong
     if (lText.isEmpty || wText.isEmpty || hText.isEmpty) {
       _showSnack(
         "Semua kolom (Panjang, Lebar, Tinggi) wajib diisi!",
@@ -34,7 +34,7 @@ class _PyramidPageState extends State<PyramidPage> {
       return;
     }
 
-    // 2. Handling Format Angka (Validasi Huruf/Simbol)
+    // Handling Format Angka (Validasi Huruf/Simbol)
     double? length = double.tryParse(lText);
     double? width = double.tryParse(wText);
     double? height = double.tryParse(hText);
@@ -44,7 +44,7 @@ class _PyramidPageState extends State<PyramidPage> {
       return;
     }
 
-    // 3. Handling Nilai Nol atau Negatif (Penting untuk Geometri)
+    // Handling Nilai Nol atau Negatif (Penting untuk Geometri)
     if (length <= 0 || width <= 0 || height <= 0) {
       _showSnack(
         "Dimensi piramida harus lebih besar dari nol!",
@@ -53,7 +53,7 @@ class _PyramidPageState extends State<PyramidPage> {
       return;
     }
 
-    // 4. Perhitungan Utama
+    // Perhitungan Utama
     setState(() {
       double baseArea = length * width;
       _volume = (1 / 3) * baseArea * height;
@@ -170,7 +170,6 @@ class _PyramidPageState extends State<PyramidPage> {
                     fontSize: 45,
                     fontWeight: FontWeight.w900,
                     color: AppColors.dark,
-                    fontFamily: 'Courier',
                     height: 1.2,
                   ),
                 ),
@@ -190,7 +189,6 @@ class _PyramidPageState extends State<PyramidPage> {
                     fontSize: 45,
                     fontWeight: FontWeight.w900,
                     color: AppColors.dark,
-                    fontFamily: 'Courier',
                     height: 1.2,
                   ),
                 ),

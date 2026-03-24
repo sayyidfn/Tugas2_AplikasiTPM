@@ -33,26 +33,26 @@ class _GuessNumberPageState extends State<GuessNumberPage> {
   void _handleCheck() {
     String input = _numberController.text.trim();
 
-    // 1. Handling Input Kosong
+    // Handling Input Kosong
     if (input.isEmpty) {
       _showSnack("Masukkan angka terlebih dahulu!", Colors.red.shade700);
       return;
     }
 
-    // 2. Handling Format Angka (Harus bulat, bukan desimal atau huruf)
+    // Handling Format Angka (Harus bulat, bukan desimal atau huruf)
     int? num = int.tryParse(input);
     if (num == null) {
       _showSnack("Input harus berupa angka bulat!", Colors.red.shade700);
       return;
     }
 
-    // 3. Handling Angka Negatif
+    // Handling Angka Negatif
     if (num < 0) {
       _showSnack("Masukkan angka positif (>= 0)!", Colors.red.shade700);
       return;
     }
 
-    // 4. Handling Angka Terlalu Besar (Mencegah Lag pada Fungsi Prima)
+    // Handling Angka Terlalu Besar (Mencegah Lag pada Fungsi Prima)
     if (num > 10000000) {
       _showSnack(
         "Angka terlalu besar! Maksimal 10.000.000 demi performa.",

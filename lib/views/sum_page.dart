@@ -18,7 +18,7 @@ class _SumPageState extends State<SumPage> {
   void _calculateLength() {
     String rawText = _textController.text;
 
-    // 1. Handling Input Kosong atau Hanya Spasi
+    // Handling Input Kosong atau Hanya Spasi
     if (rawText.trim().isEmpty) {
       _showSnack(
         "Teks tidak boleh kosong! Silakan ketik sesuatu.",
@@ -30,7 +30,7 @@ class _SumPageState extends State<SumPage> {
       return;
     }
 
-    // 2. Handling Limit Memori/Performa
+    // Handling Limit Memori/Performa
     if (rawText.length > 50000) {
       _showSnack(
         "Teks terlalu panjang! Maksimal 50.000 karakter.",
@@ -39,10 +39,9 @@ class _SumPageState extends State<SumPage> {
       return;
     }
 
-    // 3. Eksekusi Hasil
+    // Eksekusi Hasil
     setState(() {
       _result = RegExp(r'[0-9]').allMatches(rawText).length;
-      
     });
   }
 
@@ -171,7 +170,6 @@ class _SumPageState extends State<SumPage> {
                   fontSize: 80,
                   fontWeight: FontWeight.w900,
                   color: AppColors.dark,
-                  fontFamily: 'Courier',
                   letterSpacing: 2,
                 ),
               ),

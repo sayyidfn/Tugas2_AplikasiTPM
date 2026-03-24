@@ -36,7 +36,7 @@ class _DateConversionPageState extends State<DateConversionPage> {
               onSurface: AppColors.dark,
             ),
           ),
-          child: child!,
+          child: child ?? const SizedBox.shrink(),
         );
       },
     );
@@ -51,7 +51,7 @@ class _DateConversionPageState extends State<DateConversionPage> {
 
   // Fungsi utama perhitungan
   void _calculateAll() {
-    // 1. Handling Input Kosong
+    // Handling Input Kosong
     if (_selectedDate == null) {
       _showSnack(
         "Silakan pilih tanggal kejadian atau lahir terlebih dahulu!",
@@ -62,7 +62,7 @@ class _DateConversionPageState extends State<DateConversionPage> {
 
     DateTime now = DateTime.now();
 
-    // 2. Handling Masa Depan (Validasi Tambahan)
+    // Handling Masa Depan (Validasi Tambahan)
     if (_selectedDate!.isAfter(now)) {
       _showSnack(
         "Tanggal tidak boleh melebihi waktu hari ini!",
@@ -116,11 +116,14 @@ class _DateConversionPageState extends State<DateConversionPage> {
       _umurJam = h.toString();
 
       // Hijriah
-      HijriCalendar.setLocal('id');
-      HijriCalendar hijriDate = HijriCalendar.fromDate(_selectedDate!);
-      _hijriahResult =
-          "${hijriDate.hDay} ${hijriDate.getLongMonthName()} ${hijriDate.hYear} H";
-
+      try {
+        HijriCalendar hijriDate = HijriCalendar.fromDate(_selectedDate!);
+        _hijriahResult =
+            "${hijriDate.hDay} ${hijriDate.getLongMonthName()} ${hijriDate.hYear} H";
+      } catch (e) {
+        // Jika tanggalnya sebelum 1937 atau melebihi 2077, tangkap error-nya di sini!
+        _hijriahResult = "Tanggal di luar jangkauan";
+      }
       _isCalculated = true;
     });
   }
@@ -156,9 +159,7 @@ class _DateConversionPageState extends State<DateConversionPage> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 30,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -182,7 +183,7 @@ class _DateConversionPageState extends State<DateConversionPage> {
                   height: 50,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   decoration: BoxDecoration(
-                    color: Colors.white, // Menandakan bisa diisi
+                    color: Colors.white,
                     border: Border.all(color: AppColors.dark, width: 1.5),
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -248,7 +249,6 @@ class _DateConversionPageState extends State<DateConversionPage> {
                       fontSize: 32,
                       fontWeight: FontWeight.w900,
                       color: AppColors.dark,
-                      fontFamily: 'Courier',
                     ),
                   ),
                 ),
@@ -340,7 +340,6 @@ class _DateConversionPageState extends State<DateConversionPage> {
             fontSize: 35,
             fontWeight: FontWeight.w900,
             color: AppColors.dark,
-            fontFamily: 'Courier',
             height: 1.1,
           ),
         ),

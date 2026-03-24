@@ -26,7 +26,7 @@ void _handleLogin() {
       return;
     }
 
-    // 3. Logika Pencarian User dengan Handling jika tidak ketemu
+    // Pencarian User
     try {
       final userExists = UserModel.groupData.where(
         (u) => u.username == usernameInput && u.nim == passwordInput,

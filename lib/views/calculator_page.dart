@@ -17,11 +17,10 @@ class _CalculatorPageState extends State<CalculatorPage> {
   double _result = 0.0;
 
   void _calculate(bool isAddition) {
-    // 1. Ambil teks mentah
     String rawNum1 = _num1Controller.text.trim();
     String rawNum2 = _num2Controller.text.trim();
 
-    // 2. Cek Kosong
+    // Cek Kosong
     if (rawNum1.isEmpty || rawNum2.isEmpty) {
       _showSnack(
         "Angka A dan Angka B tidak boleh kosong!",
@@ -30,7 +29,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
       return;
     }
 
-    // 3. Parsing dan Cek Validitas Angka
+    // Parsing dan Cek Validitas Angka
     double? num1 = double.tryParse(rawNum1);
     double? num2 = double.tryParse(rawNum2);
 
@@ -43,7 +42,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
       return;
     }
 
-    // 4. Jika Valid, baru jalankan setState
+    // Jika Valid, baru jalankan setState
     setState(() {
       if (isAddition) {
         _result = num1 + num2;
@@ -165,7 +164,6 @@ class _CalculatorPageState extends State<CalculatorPage> {
                   fontSize: 60,
                   fontWeight: FontWeight.w900,
                   color: AppColors.dark,
-                  fontFamily: 'Courier',
                   letterSpacing: 2,
                 ),
               ),

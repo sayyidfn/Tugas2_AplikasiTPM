@@ -117,7 +117,6 @@ class GroupDataPage extends StatelessWidget {
                     fontSize: 12,
                     fontWeight: FontWeight.w700,
                     color: Colors.black54,
-                    fontFamily: 'Courier',
                     letterSpacing: 1.1,
                   ),
                 ),
