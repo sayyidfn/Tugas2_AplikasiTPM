@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   google_fonts: ^8.0.2
   flutter_svg: ^2.2.4
+  hijri: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +68,7 @@ flutter:
     - assets/icons/sigma.svg
     - assets/icons/stopwatch.svg
     - assets/images/decoration.svg
+    - assets/icons/calendar.svg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

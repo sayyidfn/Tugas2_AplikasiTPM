@@ -5,7 +5,7 @@ import 'package:tugasaplikasitpm/main.dart';
 import 'package:tugasaplikasitpm/models/menu_model.dart';
 import 'package:tugasaplikasitpm/models/stopwatch_model.dart';
 import 'package:tugasaplikasitpm/models/user_model.dart';
-import 'package:tugasaplikasitpm/pages/login_page.dart';
+import 'package:tugasaplikasitpm/views/login_page.dart';
 
 class HomePage extends StatefulWidget {
   final UserModel loginUser;
@@ -50,9 +50,14 @@ class _HomePageState extends State<HomePage> {
                     Expanded(child: _buildMenuCard(allMenus[4])),
                   ],
                 ),
-
                 const SizedBox(height: 10),
-                _buildMenuCard(allMenus[5], isPyramid: true),
+                Row(
+                  children: [
+                    Expanded(child: _buildMenuCard(allMenus[5])),
+                    const SizedBox(width: 10),
+                    Expanded(child: _buildMenuCard(allMenus[6])),
+                  ],
+                ),
               ],
             ),
           ),
@@ -70,7 +75,6 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: AppColors.dark,
           child: Icon(Icons.person, color: AppColors.white, size: 30),
         ),
-        // const SizedBox(width: 20),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -98,11 +102,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildMenuCard(
-    MenuModel menu, {
-    bool isStopwatch = false,
-    bool isPyramid = false,
-  }) {
+  Widget _buildMenuCard(MenuModel menu, {bool isStopwatch = false}) {
     return GestureDetector(
       onTap: () => Navigator.push(
         context,
@@ -120,8 +120,6 @@ class _HomePageState extends State<HomePage> {
         ),
         child: isStopwatch
             ? _buildStopwatchContent(menu)
-            : isPyramid
-            ? _buildPyramidContent(menu)
             : _buildStandardContent(menu),
       ),
     );
@@ -134,7 +132,7 @@ class _HomePageState extends State<HomePage> {
         Text(
           menu.title,
           textAlign: TextAlign.center,
-          style: AppTextStyles.heading.copyWith(fontSize: 18),
+          style: AppTextStyles.heading.copyWith(fontSize: 19),
         ),
       ],
     );

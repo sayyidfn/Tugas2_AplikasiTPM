@@ -46,7 +46,7 @@ class GroupDataPage extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Text(
-              "KELOMPOK TUGAS 2",
+              "KELOMPOK TUGAS TPM",
               style: AppTextStyles.heading.copyWith(fontSize: 22),
             ),
             const SizedBox(height: 40),

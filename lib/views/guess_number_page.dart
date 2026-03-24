@@ -47,14 +47,12 @@ class _GuessNumberPageState extends State<GuessNumberPage> {
     }
 
     // 3. Handling Angka Negatif
-    // Bilangan Ganjil/Genap dan Prima biasanya didefinisikan untuk bilangan bulat positif (asli)
     if (num < 0) {
       _showSnack("Masukkan angka positif (>= 0)!", Colors.red.shade700);
       return;
     }
 
     // 4. Handling Angka Terlalu Besar (Mencegah Lag pada Fungsi Prima)
-    // Menghitung bilangan prima untuk angka di atas 10 juta bisa membuat UI "freeze" sebentar
     if (num > 10000000) {
       _showSnack(
         "Angka terlalu besar! Maksimal 10.000.000 demi performa.",

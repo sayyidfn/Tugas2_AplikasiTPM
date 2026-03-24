@@ -41,9 +41,8 @@ class _SumPageState extends State<SumPage> {
 
     // 3. Eksekusi Hasil
     setState(() {
-      // rawText.length akan menghitung semua karakter TERMASUK spasi.
-      // Jika Anda ingin menghitung TANPA spasi di awal/akhir, gunakan rawText.trim().length
-      _result = rawText.length;
+      _result = RegExp(r'[0-9]').allMatches(rawText).length;
+      
     });
   }
 
@@ -93,9 +92,9 @@ class _SumPageState extends State<SumPage> {
               const SizedBox(height: 10),
 
               const Text(
-                "Masukkan Teks",
+                "Masukkan teks yang ingin dihitung jumlah angka (0-9) di dalamnya:",
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 14,
                   fontWeight: FontWeight.w700,
                   color: AppColors.dark,
                 ),
@@ -108,7 +107,7 @@ class _SumPageState extends State<SumPage> {
                 keyboardType: TextInputType.multiline,
                 style: const TextStyle(fontSize: 16, color: AppColors.dark),
                 decoration: InputDecoration(
-                  hintText: "Ketik teks di sini...",
+                  hintText: "Contoh: Halo123, ini adalah tes456!",
                   hintStyle: TextStyle(
                     color: AppColors.dark.withValues(alpha: 0.3),
                   ),

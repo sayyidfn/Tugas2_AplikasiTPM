@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tugasaplikasitpm/main.dart';
 import 'package:tugasaplikasitpm/models/user_model.dart';
-import 'package:tugasaplikasitpm/pages/home_page.dart';
+import 'package:tugasaplikasitpm/views/home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
