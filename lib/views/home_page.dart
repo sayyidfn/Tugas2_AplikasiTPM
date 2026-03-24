@@ -228,37 +228,4 @@ class _HomePageState extends State<HomePage> {
       ],
     );
   }
-
-  Widget _buildPyramidContent(MenuModel menu) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                menu.title,
-                style: AppTextStyles.heading.copyWith(fontSize: 18),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                "Luas = luas alas + jumlah luas sisi tegak",
-                style: AppTextStyles.body.copyWith(fontSize: 10),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              Text(
-                "Volume = 1/3 x luas alas x tinggi",
-                style: AppTextStyles.body.copyWith(fontSize: 10),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(width: 10),
-        SvgPicture.asset(menu.iconPath, height: 110),
-      ],
-    );
-  }
 }
